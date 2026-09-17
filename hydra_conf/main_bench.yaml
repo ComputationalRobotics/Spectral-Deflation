@@ -1,0 +1,43 @@
+# Main benchmark config: the four muon polar-method arms.
+#
+# One arm per run, selected via optimizer_params.args.polar_method on the CLI:
+# ns5 (standard Muon Newton-Schulz), polarexpress, deflated_ns_cut, deflated_pe_cut
+# (the deflated arms need the run_hydra_cutoff.py entry point).
+# The model is selected from the CLI: gpt_model=gpt-large.
+#
+# All four arms go through THE SAME Muon class with THE SAME defaults -- in
+# particular rms_scaling=True and lr 0.01 / wd 0 / constant-linear (0.4 warmup)
+# for every arm, so the comparison is like-for-like.
+defaults:
+  - gpt_model: gpt-large
+  - hydra: default
+  - training_data: fineweb
+  - _self_
+
+optimizer_params:
+  name: muon
+  args:
+    lr: 0.01
+    weight_decay: 0
+    momentum: 0.95
+    nesterov: True
+    ns_steps: 5
+    polar_method: ns5
+    # Deflated arms always run their setup as one fully batched clip per tall
+    # shape (two calls per step, covering 216 matrices on gpt-large); there is no
+    # per-matrix switch to set -- this one config serves every arm.
+
+lr_schedule:
+  name: constant-linear
+  warm_up_fraction: 0.4
+  min_lr_frac: 0.0   # decay to zero
+
+logging_params:
+  # 2^23 val tokens; at world=4, B=32, T=1024 that is 64 micro-batches per eval
+  val_tokens_processed: 8388608
+  log_step: 50
+  val_step: 100
+  save_ckpt_step: 100000
+  load_ckpt_step: 0
+  keep_last: 2
+  save_checkpoint: false

@@ -1,0 +1,8 @@
+bin/
+*.o
+slurm.*.out
+slurm.*.err
+__pycache__/
+*.log
+fig/*.png
+.jobs

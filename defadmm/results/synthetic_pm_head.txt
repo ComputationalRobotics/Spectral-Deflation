@@ -1,0 +1,18 @@
+# pm_head_test n=5000 n_neg=80 n_pos=60 bulk<=3 neg in [40,200] pos in [30,150] seed=7
+# gate neg side: in block 134, s1=199.2 s_kw/s1=0.01477 -> fired=1, clip kr=80 (head has 80)
+# gate pos side: in block 116, s1=148.6 s_kw/s1=0.01973 -> fired=1, clip kr=60 (head has 60)
+arm    relF_err       negHead_blk      posHead_blk_rel  bulk_rest_err    lambda_min    
+base   9.3391e-04     4.2675e-02       3.8367e-05       2.3826e-04       -8.5741e-02   
+defl   1.2040e-04     1.1017e-04       4.2668e-07       1.1902e-04       -5.6356e-03   
+#   alpha=4.479  (largest |l| of M ~ 160.7)
+# relF_err: ||out - Pi_+(M)||_F / ||Pi_+(M)||_F.  negHead_blk = ||W-^T (out-Pi) W-||_F (should be ~0);
+# posHead_blk_rel = ||W+^T (out-Pi) W+||_F / ||diag(l+)||_F;  bulk_rest_err = error outside the head blocks / ||Pi||_F.
+# pm_head_test n=5000 n_neg=80 n_pos=0 bulk<=3 neg in [40,200] pos in [30,150] seed=7
+# gate neg side: in block 158, s1=199.2 s_kw/s1=0.01477 -> fired=1, clip kr=80 (head has 80)
+# gate pos side: in block 92, s1=3 s_kw/s1=0.9687 -> fired=0, clip kr=92 (head has 0)
+arm    relF_err       negHead_blk      posHead_blk_rel  bulk_rest_err    lambda_min    
+base   5.7114e-03     4.1995e-02       0.0000e+00       1.7894e-03       -5.4505e-02   
+defl   1.0619e-03     1.1251e-04       0.0000e+00       1.0556e-03       -6.1662e-03   
+#   alpha=4.56  (largest |l| of M ~ 160.7)
+# relF_err: ||out - Pi_+(M)||_F / ||Pi_+(M)||_F.  negHead_blk = ||W-^T (out-Pi) W-||_F (should be ~0);
+# posHead_blk_rel = ||W+^T (out-Pi) W+||_F / ||diag(l+)||_F;  bulk_rest_err = error outside the head blocks / ||Pi||_F.

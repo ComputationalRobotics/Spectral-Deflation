@@ -1,0 +1,21 @@
+# 10B-token FineWeb split for the 10B-scale ablation (data10B_ablation).
+# Same training params as fineweb.yaml; only the dataset differs.
+# Prepare the shards with:
+#     python experiments/prepare_fineweb.py --shards 101 --name fineweb10B
+# (shard 0 = val, 100 train shards of 100M GPT-2 tokens = 10B training tokens,
+# written to $DEFMUON_DATA_DIR/fineweb10B-gpt2/).  The stream order matches
+# fineweb1B, so the 1B set is a prefix of this one.
+training_params:
+  # tokens_processed must be divisible by (world size * batch size * token length)
+  tokens_processed: 524288 # 2^19
+  batch_size: 32
+  num_epochs: 1
+  context_length: 1024
+  gradnorm: 1.0
+  tensorcore_precision: high   #Can be highest, high, or medium
+  autocast: True
+  mixed_precision: bfloat16
+  compile: True
+
+dataset:
+  name: "fineweb10B"

@@ -1,0 +1,14 @@
+.venv/
+*.egg-info/
+**/__pycache__/
+
+outputs/
+figures/
+spectra/dumps/
+spectra/figures/
+
+.vscode/
+ICLR2027-Deflation/
+
+# paper sources (kept out of the public repo)
+arXiv-Deflation/
